@@ -1,0 +1,23 @@
+transaction
+  - trackingNumber(_id)
+  - delivery date
+  - userid
+  - payload id
+  - purchase order number
+  - payment voucher number
+  - project code
+  - Activity line
+  - payment requisition date
+  - comments[Array]
+  - step
+  - items[array]
+  - description of items
+
+user
+  - name
+  - password
+  - role
+
+comments
+  - userid
+  - trasaction id

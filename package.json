@@ -1,0 +1,78 @@
+{
+  "name": "whouse-api",
+  "version": "1.0.0",
+  "description": "API for whouse angular project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/server",
+    "build": "babel src/ --out-dir dist/ --copy-files",
+    "lint": "eslint src/",
+    "start:dev": "nodemon --exec babel-node src/server.js",
+    "coveralls": "jest --coverage && coveralls < coverage/lcov.info",
+    "deploy": "git push --all && git push heroku backend:master",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "aws-sdk": "^2.819.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.0.1",
+    "express-rate-limit": "^5.2.3",
+    "helmet": "^3.23.3",
+    "hpp": "^0.2.3",
+    "html-to-text": "^5.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.9",
+    "mongoose-sequence": "^5.3.0",
+    "nodemailer": "^6.4.17",
+    "pug": "^2.0.4",
+    "slugify": "^1.4.6",
+    "uuid": "^8.3.2",
+    "validator": "^13.5.2",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-flow": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.7",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.21.5",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jngisiro/whouse-api.git"
+  },
+  "keywords": [
+    "Warehouse",
+    "tracking"
+  ],
+  "author": "Paul Ngisiro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jngisiro/whouse-api/issues"
+  },
+  "homepage": "https://github.com/jngisiro/whouse-api#readme",
+  "engines": {
+    "node": "10.16.0"
+  }
+}
