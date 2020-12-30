@@ -1,2 +1,2 @@
-# whouse-api
-Node/Express api for the whouse angular project
+# waf-api
+Node/Express api for the WaF project

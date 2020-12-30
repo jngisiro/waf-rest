@@ -25,7 +25,7 @@ export const getAllProducts = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'Success',
     results: products.length,
-    data: products,
+    data: { products },
   });
 });
 
@@ -33,26 +33,26 @@ export const getProduct = catchAsync(async (req, res) => {
   const product = await Product.findById(req.params.id)
 
   return res.status(200).json({
-    status: 'sucess',
+    status: 'Success',
     data: {
-      hotel,
+      product,
     },
   });
 });
 
-export const updateHotel = resHandler.updateOne(Hotel, document);
+export const updateProduct = resHandler.updateOne(Product, document);
 
-export const deleteHotel = resHandler.deleteOne(Hotel, document);
+export const deleteProduct = resHandler.deleteOne(Product, document);
 
 export const createProduct = catchAsync(async (req, res, next) => {
   if (req.file) req.body.coverImage = req.file.filename;
 
-  const product = await Hotel.create({
+  const product = await Product.create({
     ...req.body,
   });
 
   res.status(201).json({
     status: 'Success',
-    hotel: product,
+    product,
   });
 });

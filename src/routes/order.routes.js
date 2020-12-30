@@ -19,7 +19,7 @@ router
     restrictTo('admin'),
     getAllOrders
   )
-  .post(protect, restrictTo('user'), createTransaction);
+  .post(protect, restrictTo('user'), createOrder);
 
 router
   .route('/:id')

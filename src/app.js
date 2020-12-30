@@ -56,11 +56,11 @@ app.post('/api/v1/sendemail', sendemail);
 // User routes
 app.use('/api/v1/users', userRouter);
 
-// Payload Routes
-app.use('/api/v1/email', productRouter);
+// Product Routes
+app.use('/api/v1/products', productRouter);
 
-// Transaction routes
-app.use('/api/v1/transactions', orderRouter);
+// Order routes
+app.use('/api/v1/orders', orderRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find route: ${req.originalUrl}`, 400));

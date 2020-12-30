@@ -6,34 +6,26 @@ const productSchema = mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      required: [true, 'Provide the Hotel name'],
-      unique: true,
+      required: [true, 'Provide the Product name'],
+      unique: [true, 'Product gas already been registered'],
       maxlength: [40, 'Name must have less than 40 characters'],
       minlength: [10, 'Name must have more than 10 characters'],
     },
 
-    slug: String,
+    category: String,
 
     description: {
       type: String,
       trim: true,
-      required: [true, 'Provide the Hotel description'],
+      required: [true, 'Provide the Product description'],
     },
-
-    summary: {
-      type: String,
-      trim: true,
-      required: [true, 'Provide the Hotel summary'],
-    },
-
-    active: false,
 
     price: {
-      avgPrice: Number,
-      deluxe: Number,
-      Suite: Number,
-      Ordinary: Number,
+      type: Number,
+      required: [true, 'Provide the product\'s price']
     },
+    coverImage: String,
+    quantityAvailable: Number
   },
   {
     toJSON: { virtuals: true },
@@ -41,6 +33,4 @@ const productSchema = mongoose.Schema(
   }
 );
 
-productSchema.post('save', function (next) {});
-
-export default mongoose.model('Product', payloadSchema);
+export default mongoose.model('Product', productSchema);
