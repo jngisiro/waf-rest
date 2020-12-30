@@ -8,8 +8,8 @@ import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 
 import userRouter from './routes/user.routes';
-import transactionRouter from './routes/transaction.routes';
-import payloadRouter from './routes/payload.routes';
+import orderRouter from './routes/order.routes';
+import productRouter from './routes/product.routes';
 import AppError from './utils/app-error';
 import globalErrorHandler from './controllers/error.controller';
 import { sendemail } from './utils/sendemail';
@@ -57,10 +57,10 @@ app.post('/api/v1/sendemail', sendemail);
 app.use('/api/v1/users', userRouter);
 
 // Payload Routes
-app.use('/api/v1/email', payloadRouter);
+app.use('/api/v1/email', productRouter);
 
 // Transaction routes
-app.use('/api/v1/transactions', transactionRouter);
+app.use('/api/v1/transactions', orderRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find route: ${req.originalUrl}`, 400));
