@@ -49,29 +49,53 @@ exports.signup = catchAsync(async (req, res, next) => {
   if (user) return next(new AppError('Email is already registered', 403));
 
   const newUser = await User.create({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+    name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
 
   // Generate account activation token
-  // const token = newUser.createToken("confirmAccount");
-  // await newUser.save({ validateBeforeSave: false });
+  const token = newUser.createToken('confirmAccount');
+  await newUser.save({ validateBeforeSave: false });
 
-  // const confirmationUrl = `${req.protocol}://${req.get(
-  //   "host"
-  // )}/api/v1/users/confirmAccount/${token}`;
+  const confirmationUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/confirmAccount/${token}`;
 
-  // await new Email(newUser, confirmationUrl).sendWelcome();
+  await new Email(newUser, confirmationUrl).sendWelcome();
 
   res.status(201).json({
     status: 'Success',
     data: {
-      message: 'Account created',
+      message: 'Account created. Check your email to confirm your account',
     },
   });
+});
+
+exports.confirmAccout = catchAsync(async (req, res, next) => {
+  // get token from the url
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    confirmAccountToken: hashedToken,
+    confirmAccountExpires: { $gt: Date.now() },
+  });
+
+  // If there is no user, then the token is invalid or has expired
+  if (!user) return next(new AppError('Token is invalid or has expired', 400));
+
+  user.accountActivated = true;
+  user.confirmAccountToken = undefined;
+  user.confirmAccountExpires = undefined;
+  await user.save({ validateBeforeSave: false });
+
+  const redirectUrl = `https://youthful-poincare-7c7cce.netlify.app/confirmAccount`;
+
+  res.redirect(`${redirectUrl}/?success=true`);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -84,6 +108,10 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // Check if the user exists && password is correct
   const user = await User.findOne({ email }).select('+password'); // +password to select field not selected by default
+  // .populate('reviews')
+  // .populate('bookings')
+  // .populate('views')
+  // .populate('favs');
 
   if (!user || !(await user.correctPassword(password, user.password)))
     // If call to compare passwords returns false generate AppError

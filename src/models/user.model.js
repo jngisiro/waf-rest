@@ -4,8 +4,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
-  firstname: { type: String, required: [true, 'Please provide a first name'] },
-  lastname: { type: String, required: [true, 'Please provide a last name'] },
+  name: { type: String, required: [true, 'Please provide a first name'] },
   email: {
     type: String,
     required: [true, 'Please provide an email address'],
@@ -36,6 +35,23 @@ const userSchema = new mongoose.Schema({
       msg: 'Passwords do not match',
     },
   },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
+  accountActivated: {
+    type: Boolean,
+    default: false,
+  },
+  passwordChangedAt: {
+    type: Date,
+    select: false,
+  }, // Created only when a user changes password
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  confirmAccountToken: String,
+  confirmAccountExpires: Date,
 });
 
 // This function runs everytime a new document is created or saved in the database
