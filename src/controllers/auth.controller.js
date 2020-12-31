@@ -48,6 +48,8 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   if (user) return next(new AppError('Email is already registered', 403));
 
+  console.log(req.body);
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
