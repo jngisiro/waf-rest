@@ -1,13 +1,13 @@
 const nodemailer = require('nodemailer');
 const pug = require('pug');
-const htmlToText = require('html-to-text');
+const { htmlToText } = require('html-to-text');
 
 module.exports = class Email {
-  constructor(name, email, message) {
-    this.to = 'hanibk2@gmail.com';
-    this.message = message;
-    this.name = name;
-    this.from = `Track SOL <${email}>`;
+  constructor(user, url) {
+    this.to = user.email;
+    this.firstName = user.name;
+    this.url = url;
+    this.from = `Support at Safe Water Uganda <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
@@ -35,19 +35,21 @@ module.exports = class Email {
   async send(template, subject) {
     // Render HTML for the email
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
-      name: this.name,
-      subject: 'Track Sol',
+      name: this.firstName,
+      subject: 'Safe Water Uganda',
       message: this.message,
       email: this.from,
+      url: this.url,
     });
 
     // Define email options
     const mailOptions = {
-      from: this.from,
+      // from: this.from,
+      from: 'support@safewater.co.ug',
       to: this.to,
       subject,
       html,
-      text: htmlToText.fromString(html),
+      // text: htmlToText(html, { wordwrap: 130 }),
       //html:
     };
 
@@ -56,11 +58,11 @@ module.exports = class Email {
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to Hotels.ug 😁');
+    await this.send('welcome', 'Welcome to Safe Water 😁');
   }
 
   async sendMessage() {
-    await this.send('message', '🧐 Message from Track Sol Contact Form');
+    await this.send('message', '🧐 Message from Safe Water Contact Form');
   }
 
   async sendPasswordReset() {
