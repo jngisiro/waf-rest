@@ -7,12 +7,12 @@ const orderSchema = new mongoose.Schema(
       required: [true, 'The order date is required'],
     },
 
-    userid: {
+    user: {
       type: mongoose.Schema.ObjectId,
       required: [true, 'The user is required'],
     },
 
-    productId: {
+    products: {
       type: [mongoose.Schema.ObjectId],
       required: [true, 'Product ID is required'],
     },
