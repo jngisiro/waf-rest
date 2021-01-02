@@ -18,8 +18,8 @@ const orderSchema = new mongoose.Schema(
     },
 
     paymentMethod: {
-      type: Number,
-      required: [true, 'Please provide a payment voucher number'],
+      type: String,
+      required: [true, 'Please provide a payment method'],
     },
 
     status: {
