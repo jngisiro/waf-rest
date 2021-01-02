@@ -95,7 +95,7 @@ exports.confirmAccout = catchAsync(async (req, res, next) => {
   user.confirmAccountExpires = undefined;
   await user.save({ validateBeforeSave: false });
 
-  const redirectUrl = `https://youthful-poincare-7c7cce.netlify.app/confirmAccount`;
+  const redirectUrl = `https://safewater.co.ug/confirmation`;
 
   res.redirect(`${redirectUrl}/?success=true`);
 });

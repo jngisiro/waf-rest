@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema(
     },
 
     productId: {
-      type: mongoose.Schema.ObjectId,
+      type: [mongoose.Schema.ObjectId],
       required: [true, 'Product ID is required'],
     },
 
@@ -25,7 +25,7 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ['pending', 'cancelled', 'completed'],
-      default: 'pending'
+      default: 'pending',
     },
   },
   {
