@@ -15,6 +15,7 @@ const authController = require('../controllers/auth.controller');
 // Routes for Authentication and Resetting passwords
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+router.get('/confirmAccount/:token', authController.confirmAccout);
 router.get('/logout', authController.logout);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
