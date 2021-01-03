@@ -97,7 +97,7 @@ exports.confirmAccout = catchAsync(async (req, res, next) => {
 
   const redirectUrl = `https://safewater.co.ug/confirmation`;
 
-  res.redirect(`${redirectUrl}/?success=true`);
+  res.redirect(redirectUrl);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
