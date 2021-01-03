@@ -5,13 +5,13 @@ import Features from '../utils/features';
 
 export const getAllOrders = catchAsync(async (req, res) => {
   const features = new Features(Orders.find(), req.query)
-    .populate('userid')
-    .populate('productid')
+    // .populate('user')
+    // .populate('products')
     .filter()
     .sort()
     .project();
 
-  const orders = await features.query;
+  const orders = await features.query.populate('user');
 
   res.status(200).json({
     status: 'success',
@@ -24,7 +24,7 @@ export const getAllOrders = catchAsync(async (req, res) => {
 export const getOrder = catchAsync(async (req, res) => {
   const order = await Orders.findById(req.params.id)
     .populate('userid')
-    .populate('productid')
+    .populate('productid');
 
   res.status(200).json({
     status: 'success',
@@ -50,9 +50,7 @@ export const deleteOrder = catchAsync(async (req, res, next) => {
   const order = await Orders.findByIdAndDelete(req.params.id);
 
   if (!order)
-    return next(
-      new AppError(`No order found with ID: ${req.params.id}`, 404)
-    );
+    return next(new AppError(`No order found with ID: ${req.params.id}`, 404));
 
   res.status(204).json({
     status: 'Success',
@@ -61,14 +59,10 @@ export const deleteOrder = catchAsync(async (req, res, next) => {
 });
 
 export const updateOrder = catchAsync(async (req, res, next) => {
-  const order = await Orders.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const order = await Orders.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!order)
     return next(new AppError(`No view found with ID: ${req.params.id}`, 404));

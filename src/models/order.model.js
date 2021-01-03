@@ -9,11 +9,13 @@ const orderSchema = new mongoose.Schema(
 
     user: {
       type: mongoose.Schema.ObjectId,
+      ref: 'User',
       required: [true, 'The user is required'],
     },
 
     products: {
       type: [mongoose.Schema.ObjectId],
+      ref: 'Product',
       required: [true, 'Product ID is required'],
     },
 
