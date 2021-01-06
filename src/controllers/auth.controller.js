@@ -251,6 +251,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // Update to new password
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
+  console.log(req.body);
   await user.save();
 
   // Send new auth tokrn
