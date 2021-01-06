@@ -46,8 +46,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
 
   // filter unwanted data from the request object
-  const filteredData = filterRequestBody(req.body, 'name', 'email', 'phoneNumber', 'location', 'district');
-
+  console.log(req.body)
+  const filteredData = filterRequestBody(req.body, 'name', 'email', 'phoneNumber', 'location', 'district'); 
+  console.log(filteredData)
   // Update User document
   const user = await User.findByIdAndUpdate(
     req.user.id,
