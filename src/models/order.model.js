@@ -13,11 +13,13 @@ const orderSchema = new mongoose.Schema(
       required: [true, 'The user is required'],
     },
 
-    products: {
-      type: [mongoose.Schema.ObjectId],
-      ref: 'Product',
-      required: [true, 'Product ID is required'],
-    },
+    products: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Product',
+        required: [true, 'Product ID is required'],
+      },
+    ],
 
     paymentMethod: {
       type: String,

@@ -23,8 +23,8 @@ export const getAllOrders = catchAsync(async (req, res) => {
 
 export const getOrder = catchAsync(async (req, res) => {
   const order = await Orders.findById(req.params.id)
-    .populate('userid')
-    .populate('productid');
+    .populate('user')
+    .populate('products');
 
   res.status(200).json({
     status: 'success',
