@@ -62,7 +62,8 @@ export const updateOrder = catchAsync(async (req, res, next) => {
   const order = await Orders.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
-  });
+  }).populate('user')
+    .populate('products');
 
   if (!order)
     return next(new AppError(`No view found with ID: ${req.params.id}`, 404));
