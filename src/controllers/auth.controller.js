@@ -43,6 +43,7 @@ const createAuthToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   // Check if email is already registered
   const user = await User.findOne({ email: req.body.email });
 
