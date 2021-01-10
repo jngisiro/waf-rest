@@ -35,8 +35,6 @@ export const getOrder = catchAsync(async (req, res) => {
 });
 
 export const createOrder = catchAsync(async (req, res) => {
-  console.log(req.body);
-  console.log(req.user);
   req.body.userid = req.user.id;
   const order = await Orders.create(req.body);
 

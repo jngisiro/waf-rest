@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema(
   {
     orderDate: {
       type: Date,
-      required: [true, 'The order date is required'],
+      default: Date.now()
     },
 
     user: {
