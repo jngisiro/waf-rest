@@ -5,13 +5,30 @@ import Features from '../utils/features';
 
 export const getAllOrders = catchAsync(async (req, res) => {
   const features = new Features(Orders.find(), req.query)
-    // .populate('user')
-    // .populate('products')
     .filter()
     .sort()
     .project();
 
   const orders = await features.query.populate('user');
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      orders,
+    },
+  });
+});
+
+export const getOrdersForUser = catchAsync(async (req, res) => {
+  const features = new Features(
+    Orders.find({ user: req.user.id }).populate('products'),
+    req.query
+  )
+    .filter()
+    .sort()
+    .project();
+
+  const orders = await features.query;
 
   res.status(200).json({
     status: 'success',
@@ -62,7 +79,8 @@ export const updateOrder = catchAsync(async (req, res, next) => {
   const order = await Orders.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
-  }).populate('user')
+  })
+    .populate('user')
     .populate('products');
 
   if (!order)
