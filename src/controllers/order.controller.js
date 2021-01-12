@@ -20,6 +20,7 @@ export const getAllOrders = catchAsync(async (req, res) => {
 });
 
 export const getOrdersForUser = catchAsync(async (req, res) => {
+  console.log(req.user)
   const features = new Features(
     Orders.find({ user: req.user.id }).populate('products'),
     req.query
