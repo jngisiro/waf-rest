@@ -43,13 +43,10 @@ const createAuthToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   // Check if email is already registered
   const user = await User.findOne({ email: req.body.email });
 
   if (user) return next(new AppError('Email is already registered', 403));
-
-  console.log(req.body);
 
   const newUser = await User.create({
     name: req.body.name,
@@ -105,16 +102,18 @@ exports.login = catchAsync(async (req, res, next) => {
   // Destructure the email and password for email and password fields
   const { email, password } = req.body;
 
+  let { role } = req.query;
+
+  if (!role || role === '') {
+    role = 'user';
+  }
+
   // Check if email and password have been submitted
   if (!email || !password)
     return next(new AppError('Email and Password required', 400));
 
   // Check if the user exists && password is correct
-  const user = await User.findOne({ email }).select('+password'); // +password to select field not selected by default
-  // .populate('reviews')
-  // .populate('bookings')
-  // .populate('views')
-  // .populate('favs');
+  const user = await User.findOne({ email, role }).select('+password'); // +password to select field not selected by default
 
   if (!user || !(await user.correctPassword(password, user.password)))
     // If call to compare passwords returns false generate AppError
@@ -125,7 +124,6 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log(req.headers);
   // Get the token and check if it exists
   let token = '';
 
@@ -253,7 +251,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // Update to new password
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
-  console.log(req.body);
   await user.save();
 
   // Send new auth tokrn
