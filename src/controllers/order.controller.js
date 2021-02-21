@@ -54,7 +54,7 @@ export const getOrder = catchAsync(async (req, res) => {
 
 export const createOrder = catchAsync(async (req, res) => {
   req.body.userid = req.user.id;
-  const order = await Orders.create({products: req.body.products, ...userInfo});
+  const order = await Orders.create({products: req.body.products, ...req.body.userInfo});
 
 
   res.status(201).json({
