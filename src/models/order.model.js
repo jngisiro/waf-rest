@@ -7,12 +7,6 @@ const orderSchema = new mongoose.Schema(
       default: Date.now()
     },
 
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-      required: [true, 'The user is required'],
-    },
-
     products: [
       {
         type: mongoose.Schema.ObjectId,
@@ -31,6 +25,13 @@ const orderSchema = new mongoose.Schema(
       enum: ['pending', 'cancelled', 'confirmed', 'archived'],
       default: 'pending',
     },
+
+    name: String,
+    email: String,
+    phone: String,
+    district: String,
+    subcounty: String,
+    parish: String
   },
   {
     toJSON: { virtuals: true },
