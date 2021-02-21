@@ -54,8 +54,8 @@ export const getOrder = catchAsync(async (req, res) => {
 
 export const createOrder = catchAsync(async (req, res) => {
   req.body.userid = req.user.id;
-  const order = await Orders.create(req.body);
-  console.log(req.body);
+  const order = await Orders.create({products: req.body.products, ...userInfo});
+
 
   res.status(201).json({
     status: 'success',
